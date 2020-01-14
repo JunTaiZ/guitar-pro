@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>吉他谱</title>
+  <style>
+    ::-webkit-scrollbar {
+      width: 10px;
+      background-color: #EEE;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #aaa;
+      border-radius: 5px;
+    }
+    body {
+      margin: 0;
+    }
+    [v-cloak] {
+      display: none;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: 2fr 1200px 1fr;
+      grid-template-rows: 1fr;
+    }
+    .content {
+      text-align: center;
+      overflow-y: auto;
+    }
+    img.img {
+      width: 980px;
+    }
+    .divider {
+      height: 10px;
+      /*background-color: #eee;*/
+    }
+    a {
+      text-decoration: none;
+    }
+    .index-container {
+      margin: 20px;
+    }
+    .index-container .index {
+      padding: 10px 15px;
+      display: inline-block;
+      border-radius: 50%;
+    }
+    .song-container {
+      margin: 20px;
+    }
+    .song-container .song {
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .selected {
+      background-color: #CCCCCC;
+    }
+  </style>
+</head>
+<body>
+<div v-cloak id="app" class="grid-container">
+  <div class="song-container">
+    <div
+      :class="['song', target === index ? 'selected' : '']"
+      v-for="{ name, index } in songs" :key="index"
+      @click="changeSong(index)"
+    >
+      {{ name }}
+    </div>
+  </div>
+  <div class="content" ref="content">
+    <div v-for="(url, idx) in images[target]" :key="url">
+      <img class="img" :src="url" alt="" :id="idx">
+      <div class="divider"></div>
+    </div>
+  </div>
+  <div class="index-container">
+    <div
+      v-for="(url, idx) in images[target]" :key="url"
+    >
+      <a
+        @click="changeIdx(idx)"
+        :class="['index', idx === currentIdx ? 'selected' : '']"
+        :href="'#' + idx"
+      >{{idx + 1}}</a>
+    </div>
+  </div>
+</div>
+<script src="js/vue.min.js"></script>
+<script>
+  let app = new Vue({
+    el: '#app',
+    data: {
+      target: 'perfect',
+      currentIdx: 0,
+      songs: [{
+        name: 'perfect',
+        index: 'perfect',
+      }, {
+        name: 'shallow',
+        index: 'shallow',
+      }, {
+        name: '梦中的婚礼',
+        index: 'weddingOfDream',
+      }, {
+        name: '月半小夜曲',
+        index: 'moonNightSong',
+      }, {
+        name: '真的爱你',
+        index: 'realLoveYou',
+      }, {
+        name: '同桌的你',
+        index: 'youOfSameDesk',
+      }, {
+        name: '姑娘',
+        index: 'girl',
+      }],
+      images: {
+        perfect: [
+          'perfect/01.png',
+          'perfect/02.png',
+          'perfect/03.png',
+          'perfect/04.png',
+          'perfect/05.png',
+        ],
+        shallow: [
+          'shallow/1.png',
+          'shallow/2.png',
+          'shallow/3.png',
+          'shallow/4.png',
+          'shallow/5.png',
+        ],
+        weddingOfDream: [
+          '梦中的婚礼/梦中的婚礼1.gif',
+          '梦中的婚礼/梦中的婚礼2.gif',
+        ],
+        moonNightSong: [
+          '粤语/月半小夜曲1.png',
+          '粤语/月半小夜曲2.png',
+          '粤语/月半小夜曲3.png',
+        ],
+        realLoveYou: [
+          '粤语/真的爱你1.png',
+          '粤语/真的爱你2.png',
+        ],
+        youOfSameDesk: [
+          '同桌的你/1.png',
+          '同桌的你/2.png',
+        ],
+        girl: [
+          '姑娘/1.png',
+          '姑娘/2.png',
+        ],
+      },
+    },
+    methods: {
+      changeSong(song) {
+        console.log(song)
+        this.target = song
+
+        this.currentIdx = 0
+      },
+      changeIdx(idx) {
+        this.currentIdx = idx
+      }
+    },
+    mounted() {
+      this.$refs.content.style.height = document.documentElement.clientHeight + 'px'
+    }
+  })
+</script>
+</body>
+</html>
