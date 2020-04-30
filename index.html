@@ -81,7 +81,7 @@
   </div>
   <div class="content" ref="content">
     <div v-for="(url, idx) in images[target]" :key="url">
-      <img class="img" :src="url" alt="" :id="idx">
+      <img class="img" :src="url" alt="" :id="'image' + idx">
       <div class="divider"></div>
     </div>
   </div>
@@ -94,13 +94,28 @@
       <a
         @click="changeIdx(idx)"
         :class="['index', idx === currentIdx ? 'selected' : '']"
-        :href="'#' + idx"
+        :href="'#image' + idx"
       >{{idx + 1}}</a>
     </div>
   </div>
 </div>
 <script src="js/vue.min.js"></script>
+<script src="js/vue-scrollto.js"></script>
 <script>
+
+  Vue.use(VueScrollTo, {
+    container: ".content",
+    duration: 500,
+    easing: "ease",
+    offset: 0,
+    force: true,
+    cancelable: true,
+    onStart: false,
+    onDone: false,
+    onCancel: false,
+    x: false,
+    y: true
+  })
   let app = new Vue({
     el: '#app',
     data: {
@@ -178,10 +193,22 @@
         this.currentIdx = idx
       },
       scrollPrePage() {
-        this.$refs.content.scrollBy(0, -this.elementHeight + 80)
+        this.scrollPageTransition(-(this.elementHeight / 4 * 3))
       },
       scrollNextPage() {
-        this.$refs.content.scrollBy(0, this.elementHeight - 80)
+        this.scrollPageTransition(this.elementHeight / 4 * 3)
+      },
+      scrollPageTransition(length) {
+        length = length >> 0
+        let oneTimeLength = length / 99
+        const intervalId = setInterval(() => {
+          length -= oneTimeLength
+          if (Math.abs(length) + 1 > Math.abs(oneTimeLength)) {
+            this.$refs.content.scrollBy(0, oneTimeLength)
+          } else {
+            clearInterval(intervalId)
+          }
+        }, 1)
       }
     },
     mounted() {
