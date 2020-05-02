@@ -26,13 +26,14 @@
     .content {
       text-align: center;
       overflow-y: auto;
+      scroll-behavior: smooth;
     }
     img.img {
       width: 1150px;
     }
     .divider {
-      height: 10px;
-      /*background-color: #eee;*/
+      height: 2px;
+      background-color: #eee;
     }
     a {
       text-decoration: none;
@@ -82,7 +83,6 @@
   <div class="content" ref="content">
     <div v-for="(url, idx) in images[target]" :key="url">
       <img class="img" :src="url" alt="" :id="'image' + idx">
-      <div class="divider"></div>
     </div>
   </div>
   <div class="index-container">
@@ -103,19 +103,6 @@
 <script src="js/vue-scrollto.js"></script>
 <script>
 
-  Vue.use(VueScrollTo, {
-    container: ".content",
-    duration: 500,
-    easing: "ease",
-    offset: 0,
-    force: true,
-    cancelable: true,
-    onStart: false,
-    onDone: false,
-    onCancel: false,
-    x: false,
-    y: true
-  })
   let app = new Vue({
     el: '#app',
     data: {
@@ -145,19 +132,19 @@
         index: 'girl',
       }],
       images: {
-        shallow: [
-          'shallow/1.png',
-          'shallow/2.png',
-          'shallow/3.png',
-          'shallow/4.png',
-          'shallow/5.png',
-        ],
         perfect: [
           'perfect/1.png',
           'perfect/2.png',
           'perfect/3.png',
           'perfect/4.png',
           'perfect/5.png',
+        ],
+        shallow: [
+          'shallow/1.png',
+          'shallow/2.png',
+          'shallow/3.png',
+          'shallow/4.png',
+          'shallow/5.png',
         ],
         weddingOfDream: [
           '梦中的婚礼/梦中的婚礼1.gif',
@@ -193,23 +180,13 @@
         this.currentIdx = idx
       },
       scrollPrePage() {
-        this.scrollPageTransition(-(this.elementHeight / 4 * 3))
+        this.$refs.content.scrollBy(0, -(this.elementHeight / 4 * 3))
+        // this.scrollPageTransition(-(this.elementHeight / 4 * 3))
       },
       scrollNextPage() {
-        this.scrollPageTransition(this.elementHeight / 4 * 3)
+        // this.scrollPageTransition(this.elementHeight / 4 * 3)
+        this.$refs.content.scrollBy(0, this.elementHeight / 4 * 3)
       },
-      scrollPageTransition(length) {
-        length = length >> 0
-        let oneTimeLength = length / 99
-        const intervalId = setInterval(() => {
-          length -= oneTimeLength
-          if (Math.abs(length) + 1 > Math.abs(oneTimeLength)) {
-            this.$refs.content.scrollBy(0, oneTimeLength)
-          } else {
-            clearInterval(intervalId)
-          }
-        }, 1)
-      }
     },
     mounted() {
       this.elementHeight = document.documentElement.clientHeight

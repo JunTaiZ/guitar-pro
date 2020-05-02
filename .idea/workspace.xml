@@ -20,7 +20,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="57ee6632-2ee3-40c4-a92e-971f91b52274" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/js/vue-scrollto.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
@@ -80,7 +79,8 @@
       <workItem from="1578629634646" duration="1363000" />
       <workItem from="1578712752043" duration="84000" />
       <workItem from="1579085664953" duration="806000" />
-      <workItem from="1588205346130" duration="5269000" />
+      <workItem from="1588205346130" duration="6593000" />
+      <workItem from="1588380174240" duration="1132000" />
     </task>
     <servers />
   </component>
@@ -97,5 +97,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
